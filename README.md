@@ -20,7 +20,7 @@ Puedes probar la versión en producción desplegada automáticamente en Vercel:
 
 O clonar el repositorio localmente:
 ```bash
-git clone [https://github.com/anyelo888ra-ux/ps4-web-os.git](https://github.com/anyelo888ra-ux/ps4-web-os.git)
+git clone https://github.com/anyelo888ra-ux/ps4-web-os.git
 cd ps4-web-os
 
 ```
