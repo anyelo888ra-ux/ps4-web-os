@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS Store - Publicación HTML</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-slate-950 text-white h-screen flex flex-col p-10 select-none">
+    <div class="waves-bg fixed inset-0 z-0 pointer-events-none opacity-80"></div>
+
+    <div class="relative z-10 flex justify-between items-center mb-8 border-b border-white/10 pb-4">
+        <div class="flex items-center gap-4">
+            <button onclick="window.location.href='menu.html'" class="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg text-xs font-bold transition cursor-pointer">← Volver al Menú</button>
+            <h1 class="text-2xl font-extrabold tracking-wide text-blue-100">🛍️ NEXUS Store</h1>
+        </div>
+        <div class="flex gap-3">
+            <button id="nav-store" onclick="switchTab('store')" class="px-4 py-2 rounded-lg font-bold text-xs bg-blue-600 text-white cursor-pointer transition">Explorar</button>
+            <button id="nav-publish" onclick="switchTab('publish')" class="px-4 py-2 rounded-lg font-bold text-xs bg-white/5 hover:bg-white/10 text-slate-300 cursor-pointer transition">Publicar Juego (HTML)</button>
+        </div>
+    </div>
+
+    <!-- Vista de Explorar Store -->
+    <div id="view-store" class="relative z-10 flex-1 overflow-y-auto space-y-4">
+        <h2 class="text-lg font-bold text-slate-200">Juegos creados por la comunidad</h2>
+        <div id="games-grid" class="grid grid-cols-3 gap-6">
+            <!-- Dinámico -->
+        </div>
+    </div>
+
+    <!-- Vista de Publicación HTML (Ruta: /nexus-store/publish) -->
+    <div id="view-publish" class="relative z-10 flex-1 overflow-y-auto space-y-6 hidden max-w-2xl mx-auto w-full">
+        <div>
+            <h2 class="text-xl font-bold text-slate-100">Publicar Juego en NEXUS Store</h2>
+            <p class="text-xs text-slate-400">Sube tu código HTML/JS/CSS. Al publicarlo, aparecerá automáticamente como aplicación en el carrusel principal de la consola.</p>
+        </div>
+
+        <div class="space-y-4 bg-white/5 p-6 rounded-2xl border border-white/10 shadow-xl backdrop-blur-md">
+            <div>
+                <label class="block text-xs font-bold text-slate-300 mb-1">Título del Juego</label>
+                <input type="text" id="game-title" placeholder="Ej: Mi Primer Juego HTML" class="w-full bg-slate-900 border border-white/20 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-slate-300 mb-1">Estructura del Código (HTML / JS / Estilos)</label>
+                <textarea id="game-html" rows="8" placeholder="&lt;div style='background:black; color:white; padding:20px; text-align:center;'&gt;&lt;h1&gt;¡Hola Mundo!&lt;/h1&gt;&lt;/div&gt;" class="w-full bg-slate-900 border border-white/20 rounded-lg px-4 py-2.5 text-xs font-mono text-white focus:outline-none focus:border-blue-500"></textarea>
+            </div>
+            <button onclick="publishGame()" class="w-full bg-emerald-600 hover:bg-emerald-500 font-bold text-sm py-3 rounded-lg transition cursor-pointer shadow-lg shadow-emerald-600/30">
+                Publicar en la Store
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const activeUser = JSON.parse(localStorage.getItem('nexus_active_user'));
+        if (!activeUser) window.location.href = 'login.html';
+
+        function switchTab(tab) {
+            const viewStore = document.getElementById('view-store');
+            const viewPublish = document.getElementById('view-publish');
+            const navStore = document.getElementById('nav-store');
+            const navPublish = document.getElementById('nav-publish');
+
+            if (tab === 'publish') {
+                viewStore.classList.add('hidden');
+                viewPublish.classList.remove('hidden');
+                navPublish.className = 'px-4 py-2 rounded-lg font-bold text-xs bg-blue-600 text-white cursor-pointer transition';
+                navStore.className = 'px-4 py-2 rounded-lg font-bold text-xs bg-white/5 hover:bg-white/10 text-slate-300 cursor-pointer transition';
+                history.pushState(null, '', '/nexus-store/publish');
+            } else {
+                viewPublish.classList.add('hidden');
+                viewStore.classList.remove('hidden');
+                navStore.className = 'px-4 py-2 rounded-lg font-bold text-xs bg-blue-600 text-white cursor-pointer transition';
+                navPublish.className = 'px-4 py-2 rounded-lg font-bold text-xs bg-white/5 hover:bg-white/10 text-slate-300 cursor-pointer transition';
+                history.pushState(null, '', 'store.html');
+                loadGames();
+            }
+        }
+
+        // Si recargan directamente en la ruta virtual /nexus-store/publish
+        if (window.location.pathname.includes('/nexus-store/publish')) {
+            switchTab('publish');
+        } else {
+            loadGames();
+        }
+
+        function loadGames() {
+            const grid = document.getElementById('games-grid');
+            const games = JSON.parse(localStorage.getItem('nexus_published_games') || '[]');
+            grid.innerHTML = games.length === 0 ? '<p class="text-xs text-slate-500 col-span-3">No hay juegos publicados todavía.</p>' : '';
+
+            games.forEach((g) => {
+                const card = document.createElement('div');
+                card.className = 'bg-slate-900/80 p-5 rounded-xl border border-white/10 flex flex-col justify-between gap-4 backdrop-blur-md';
+                card.innerHTML = `
+                    <div>
+                        <h3 class="font-bold text-base text-white">${g.title}</h3>
+                        <span class="text-[10px] text-slate-400">Creado por: ${g.author}</span>
+                    </div>
+                    <button onclick='launchGame(${JSON.stringify(g.htmlContent)})' class="bg-blue-600 hover:bg-blue-500 text-xs font-bold py-2 rounded-lg transition cursor-pointer">Ejecutar Juego</button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function publishGame() {
+            const title = document.getElementById('game-title').value.trim();
+            const htmlContent = document.getElementById('game-html').value.trim();
+
+            if (!title || !htmlContent) {
+                alert('Por favor completa todos los campos.');
+                return;
+            }
+
+            const games = JSON.parse(localStorage.getItem('nexus_published_games') || '[]');
+            games.push({ title, htmlContent, author: activeUser.username });
+            localStorage.setItem('nexus_published_games', JSON.stringify(games));
+
+            alert('¡Juego publicado con éxito en la NEXUS Store!');
+            document.getElementById('game-title').value = '';
+            document.getElementById('game-html').value = '';
+            switchTab('store');
+        }
+
+        function launchGame(html) {
+            const win = window.open('', '_blank');
+            win.document.write(html);
+        }
+    </script>
+</body>
+</html>
