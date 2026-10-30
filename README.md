@@ -13,7 +13,7 @@ Un simulador de la interfaz de usuario (XMB) de PlayStation 4 construido con HTM
 Simplemente clona el repositorio y abre `index.html` en tu navegador, o entra al deploy automático.
 
 ```bash
-git clone [https://github.com/tu-usuario/ps4-web-os.git](https://github.com/tu-usuario/ps4-web-os.git)
+git clone https://github.com/anyelo888ra-ux/ps4-web-os.git
 cd ps4-web-os
 
 ```
