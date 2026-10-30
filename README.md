@@ -4,8 +4,8 @@ Un simulador de la interfaz de usuario (XMB) de PlayStation 4 construido con HTM
 
 ## ✨ Características
 - 🌊 **Fondo Dinámico:** Ondas animadas estilo PS4.
-- 👤 **Selección de Usuarios:** Pantalla de inicio de sesión de usuario estilo PlayStation[cite: 11].
-- 🎮 **Navegación XMB:** Menú horizontal con iconos de juegos y apps[cite: 10].
+- 👤 **Selección de Usuarios:** Pantalla de inicio de sesión de usuario estilo PlayStation.
+- 🎮 **Navegación XMB:** Menú horizontal con iconos de juegos y apps.
 - 🕹️ **Soporte para Gamepad:** Navega la interfaz usando un control real (DualShock / Xbox / Genérico) mediante la *Gamepad API*.
 - 🔊 **Efectos de Audio:** Sonidos nativos del sistema al cambiar de opción.
 
