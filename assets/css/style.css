@@ -1,0 +1,27 @@
+/* Animated Blue Wave Background */
+.waves-bg {
+    background: radial-gradient(circle at 50% 30%, #1e3a8a 0%, #0f172a 70%, #020617 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.waves-bg::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 60%);
+    animation: pulse 8s infinite alternate ease-in-out;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1) translate(0, 0); }
+    100% { transform: scale(1.2) translate(2%, 2%); }
+}
+
+kbd {
+    font-family: monospace;
+    font-weight: bold;
+}
