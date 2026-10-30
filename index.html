@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PS4 Web OS Simulator</title>
+    <title>PS4 Web OS Simulator - NEXUS.OS</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -35,10 +35,10 @@
                 <div>
                     <label class="block text-xs font-bold text-slate-300 mb-2">Selecciona un Avatar</label>
                     <div class="flex gap-4 justify-center">
-                        <button class="avatar-opt active w-14 h-14 rounded-lg bg-blue-600 border-2 border-white flex items-center justify-center text-2xl transition" data-avatar="🤖">🤖</button>
-                        <button class="avatar-opt w-14 h-14 rounded-lg bg-indigo-600 border-2 border-transparent flex items-center justify-center text-2xl transition" data-avatar="🎮">🎮</button>
-                        <button class="avatar-opt w-14 h-14 rounded-lg bg-purple-600 border-2 border-transparent flex items-center justify-center text-2xl transition" data-avatar="👾">👾</button>
-                        <button class="avatar-opt w-14 h-14 rounded-lg bg-emerald-600 border-2 border-transparent flex items-center justify-center text-2xl transition" data-avatar="🔥">🔥</button>
+                        <button class="avatar-opt active w-14 h-14 rounded-lg bg-blue-600 border-2 border-white flex items-center justify-center text-2xl transition cursor-pointer" data-avatar="🤖">🤖</button>
+                        <button class="avatar-opt w-14 h-14 rounded-lg bg-indigo-600 border-2 border-transparent flex items-center justify-center text-2xl transition cursor-pointer" data-avatar="🎮">🎮</button>
+                        <button class="avatar-opt w-14 h-14 rounded-lg bg-purple-600 border-2 border-transparent flex items-center justify-center text-2xl transition cursor-pointer" data-avatar="👾">👾</button>
+                        <button class="avatar-opt w-14 h-14 rounded-lg bg-emerald-600 border-2 border-transparent flex items-center justify-center text-2xl transition cursor-pointer" data-avatar="🔥">🔥</button>
                     </div>
                 </div>
 
@@ -66,7 +66,7 @@
             <h2 class="text-2xl font-bold text-white mb-4">¿Quién usa este mando?</h2>
 
             <div id="users-container" class="flex gap-8 items-center">
-                <!-- Se llena dinámicamente desde JS usando localStorage -->
+                <!-- Dinámico -->
             </div>
         </div>
 
@@ -84,8 +84,7 @@
         <!-- Top Navigation Bar -->
         <header class="flex justify-between items-center text-slate-300 text-sm font-semibold">
             <div class="flex items-center gap-6">
-                <!-- Icono de NEXUS Pass (Sustituto de PS Plus) -->
-                <span title="NEXUS Pass (Suscripción)" class="text-xl cursor-pointer hover:scale-110 transition">⚡</span>
+                <span title="NEXUS Pass" class="text-xl cursor-pointer hover:scale-110 transition">⚡</span>
                 <span title="Novedades" class="text-xl cursor-pointer hover:scale-110 transition">ℹ️</span>
                 <span title="Trofeos" class="text-xl cursor-pointer hover:scale-110 transition">🏆 1</span>
             </div>
@@ -99,8 +98,8 @@
         <section class="my-auto">
             <div id="carousel" class="flex gap-6 transition-transform duration-300 ease-out items-center">
                 
-                <!-- NEXUS Pass (Anteriormente PS Plus) -->
-                <div class="xmb-item active min-w-[180px] h-[180px] bg-amber-600 rounded-lg p-4 flex flex-col justify-between border-4 border-white shadow-2xl scale-110 transition-all cursor-pointer">
+                <!-- NEXUS Pass -->
+                <div class="xmb-item active min-w-[180px] h-[180px] bg-amber-600 rounded-lg p-4 flex flex-col justify-between border-4 border-white shadow-2xl scale-110 transition-all cursor-pointer" data-app="nexus-pass">
                     <span class="text-4xl">⚡</span>
                     <div>
                         <h3 class="font-bold text-lg leading-tight">NEXUS Pass</h3>
@@ -109,16 +108,16 @@
                 </div>
 
                 <!-- Store -->
-                <div class="xmb-item min-w-[180px] h-[180px] bg-blue-600 rounded-lg p-4 flex flex-col justify-between border-2 border-transparent hover:border-white/50 transition-all opacity-80 cursor-pointer">
+                <div class="xmb-item min-w-[180px] h-[180px] bg-blue-600 rounded-lg p-4 flex flex-col justify-between border-2 border-transparent hover:border-white/50 transition-all opacity-80 cursor-pointer" data-app="nexus-store">
                     <span class="text-4xl">🛍️</span>
                     <div>
                         <h3 class="font-bold text-lg leading-tight">NEXUS Store</h3>
-                        <p class="text-[10px] text-blue-200">Tienda oficial</p>
+                        <p class="text-[10px] text-blue-200">Tienda y Publicación</p>
                     </div>
                 </div>
 
-                <!-- Games -->
-                <div class="xmb-item min-w-[180px] h-[180px] bg-slate-800 rounded-lg p-4 flex flex-col justify-between border-2 border-transparent hover:border-white/50 transition-all opacity-80 cursor-pointer">
+                <!-- Games / Apps Dinámicas inyectadas desde LocalStorage -->
+                <div class="xmb-item min-w-[180px] h-[180px] bg-slate-800 rounded-lg p-4 flex flex-col justify-between border-2 border-transparent hover:border-white/50 transition-all opacity-80 cursor-pointer" data-app="default-game">
                     <span class="text-4xl">🎮</span>
                     <div>
                         <h3 class="font-bold text-lg leading-tight">FLAP DASH</h3>
@@ -126,7 +125,7 @@
                     </div>
                 </div>
 
-                <div class="xmb-item min-w-[180px] h-[180px] bg-indigo-900 rounded-lg p-4 flex flex-col justify-between border-2 border-transparent hover:border-white/50 transition-all opacity-80 cursor-pointer">
+                <div class="xmb-item min-w-[180px] h-[180px] bg-indigo-900 rounded-lg p-4 flex flex-col justify-between border-2 border-transparent hover:border-white/50 transition-all opacity-80 cursor-pointer" data-app="nexus-ai">
                     <span class="text-4xl">🤖</span>
                     <div>
                         <h3 class="font-bold text-lg leading-tight">NEXUS.AI</h3>
@@ -142,11 +141,27 @@
             <div class="flex gap-6">
                 <span><kbd class="bg-white/20 px-2 py-0.5 rounded text-white">Enter</kbd> Seleccionar</span>
                 <span><kbd class="bg-white/20 px-2 py-0.5 rounded text-white">← / →</kbd> Moverse</span>
+                <span><kbd class="bg-white/20 px-2 py-0.5 rounded text-white">Esc</kbd> Cerrar App</span>
             </div>
             <span>NEXUS.OS Web Engine</span>
         </footer>
 
     </main>
+
+    <!-- App Window Modal / UI Container -->
+    <div id="app-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-8 opacity-0 pointer-events-none transition-all duration-300">
+        <div id="app-content-box" class="bg-slate-900 border border-white/20 w-full max-w-4xl h-[80vh] rounded-2xl overflow-hidden flex flex-col shadow-2xl relative">
+            <!-- Header de la ventana -->
+            <div class="bg-slate-800 px-6 py-4 flex justify-between items-center border-b border-white/10">
+                <h3 id="app-title" class="font-bold text-lg">Aplicación</h3>
+                <button id="close-app" class="text-xs bg-red-600 hover:bg-red-500 px-3 py-1.5 rounded font-bold cursor-pointer transition">Cerrar [Esc]</button>
+            </div>
+            <!-- Cuerpo dinámico de la App -->
+            <div id="app-body" class="p-6 flex-1 overflow-y-auto">
+                <!-- Contenido inyectado por JS -->
+            </div>
+        </div>
+    </div>
 
     <script src="assets/js/audio.js"></script>
     <script src="assets/js/app.js"></script>
