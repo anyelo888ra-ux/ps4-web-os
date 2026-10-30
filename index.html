@@ -12,32 +12,61 @@
     <!-- Ambient Waves Background -->
     <div class="waves-bg fixed inset-0 z-0 pointer-events-none opacity-80"></div>
 
+    <!-- First Time Initial Setup Screen -->
+    <div id="setup-screen" class="fixed inset-0 z-50 bg-blue-950/95 backdrop-blur-md flex flex-col justify-between p-12 transition-opacity duration-500 hidden">
+        <div class="flex items-center gap-4">
+            <div class="text-3xl font-extrabold tracking-widest text-blue-100 flex items-center gap-2">
+                <span>⚡</span> NEXUS.OS
+            </div>
+        </div>
+
+        <div class="max-w-md mx-auto w-full flex flex-col gap-6">
+            <div class="text-center">
+                <h2 class="text-2xl font-bold text-white mb-1">Configuración Inicial</h2>
+                <p class="text-slate-300 text-xs">Crea tu usuario para comenzar a usar la consola web.</p>
+            </div>
+
+            <div class="space-y-4 bg-white/5 p-6 rounded-2xl border border-white/10 shadow-2xl">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-2">Nombre de Usuario</label>
+                    <input type="text" id="setup-username" placeholder="Ej: c00lkidd_player" class="w-full bg-slate-900/80 border border-white/20 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-400 transition">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-2">Selecciona un Avatar</label>
+                    <div class="flex gap-4 justify-center">
+                        <button class="avatar-opt active w-14 h-14 rounded-lg bg-blue-600 border-2 border-white flex items-center justify-center text-2xl transition" data-avatar="🤖">🤖</button>
+                        <button class="avatar-opt w-14 h-14 rounded-lg bg-indigo-600 border-2 border-transparent flex items-center justify-center text-2xl transition" data-avatar="🎮">🎮</button>
+                        <button class="avatar-opt w-14 h-14 rounded-lg bg-purple-600 border-2 border-transparent flex items-center justify-center text-2xl transition" data-avatar="👾">👾</button>
+                        <button class="avatar-opt w-14 h-14 rounded-lg bg-emerald-600 border-2 border-transparent flex items-center justify-center text-2xl transition" data-avatar="🔥">🔥</button>
+                    </div>
+                </div>
+
+                <button id="btn-create-user" class="w-full bg-blue-600 hover:bg-blue-500 font-bold text-sm py-3 rounded-lg transition shadow-lg shadow-blue-600/30 cursor-pointer mt-2">
+                    Guardar y Entrar
+                </button>
+            </div>
+        </div>
+
+        <div class="text-center text-xs text-slate-400 border-t border-white/10 pt-4">
+            <span>Los datos de usuario se guardan localmente en tu navegador.</span>
+        </div>
+    </div>
+
     <!-- Login Screen Overlay -->
-    <div id="login-screen" class="fixed inset-0 z-50 bg-blue-950/90 backdrop-blur-md flex flex-col justify-between p-12 transition-opacity duration-500">
+    <div id="login-screen" class="fixed inset-0 z-40 bg-blue-950/90 backdrop-blur-md flex flex-col justify-between p-12 transition-opacity duration-500">
         <div class="flex items-center gap-4">
             <div class="text-4xl font-extrabold tracking-widest text-blue-100 flex items-center gap-2">
-                <span>⚡</span> PS4
+                <span>⚡</span> NEXUS.OS
             </div>
         </div>
 
         <div class="flex flex-col items-center justify-center gap-6">
-            <p class="text-slate-300 text-sm tracking-wide">🎮 Mando inalambrico DUALSHOCK 4 conectado.</p>
+            <p class="text-slate-300 text-sm tracking-wide">🎮 Mando inalámbrico DUALSHOCK 4 conectado.</p>
             <h2 class="text-2xl font-bold text-white mb-4">¿Quién usa este mando?</h2>
 
-            <div class="flex gap-8 items-center">
-                <button class="user-card active flex flex-col items-center gap-3 p-4 rounded-xl border-2 border-white bg-white/10 shadow-2xl transition-all scale-105 cursor-pointer">
-                    <div class="w-24 h-24 rounded-lg bg-blue-600 flex items-center justify-center overflow-hidden border border-white/20">
-                        <span class="text-4xl">🤖</span>
-                    </div>
-                    <span class="font-bold text-sm tracking-wide">00c00lkidd_v2ytchill</span>
-                </button>
-
-                <button class="user-card flex flex-col items-center gap-3 p-4 rounded-xl border-2 border-transparent bg-white/5 hover:bg-white/10 transition-all cursor-pointer">
-                    <div class="w-24 h-24 rounded-lg bg-slate-800 flex items-center justify-center border border-white/10">
-                        <span class="text-3xl text-slate-400">+</span>
-                    </div>
-                    <span class="text-slate-400 font-bold text-sm">Usuario nuevo</span>
-                </button>
+            <div id="users-container" class="flex gap-8 items-center">
+                <!-- Se llena dinámicamente desde JS usando localStorage -->
             </div>
         </div>
 
@@ -45,7 +74,7 @@
             <div class="flex gap-4">
                 <span><kbd class="bg-white/20 px-2 py-0.5 rounded text-white">Enter</kbd> Confirmar</span>
             </div>
-            <span>v1.0.0 Open Source</span>
+            <button id="btn-add-user" class="text-xs text-blue-300 hover:text-white transition font-bold cursor-pointer">+ Crear nuevo usuario</button>
         </div>
     </div>
 
@@ -55,12 +84,13 @@
         <!-- Top Navigation Bar -->
         <header class="flex justify-between items-center text-slate-300 text-sm font-semibold">
             <div class="flex items-center gap-6">
-                <span class="text-xl">🌟</span>
-                <span class="text-xl">ℹ️</span>
-                <span class="text-xl">🏆 1</span>
+                <!-- Icono de NEXUS Pass (Sustituto de PS Plus) -->
+                <span title="NEXUS Pass (Suscripción)" class="text-xl cursor-pointer hover:scale-110 transition">⚡</span>
+                <span title="Novedades" class="text-xl cursor-pointer hover:scale-110 transition">ℹ️</span>
+                <span title="Trofeos" class="text-xl cursor-pointer hover:scale-110 transition">🏆 1</span>
             </div>
             <div class="flex items-center gap-4 text-xs">
-                <span>00c00lkidd_v2ytchill</span>
+                <span id="active-user-display" class="font-bold text-white">Cargando...</span>
                 <span id="clock" class="text-sm font-bold text-white">03:33 PM</span>
             </div>
         </header>
@@ -69,12 +99,21 @@
         <section class="my-auto">
             <div id="carousel" class="flex gap-6 transition-transform duration-300 ease-out items-center">
                 
+                <!-- NEXUS Pass (Anteriormente PS Plus) -->
+                <div class="xmb-item active min-w-[180px] h-[180px] bg-amber-600 rounded-lg p-4 flex flex-col justify-between border-4 border-white shadow-2xl scale-110 transition-all cursor-pointer">
+                    <span class="text-4xl">⚡</span>
+                    <div>
+                        <h3 class="font-bold text-lg leading-tight">NEXUS Pass</h3>
+                        <p class="text-[10px] text-amber-200">3 días de beneficios</p>
+                    </div>
+                </div>
+
                 <!-- Store -->
-                <div class="xmb-item active min-w-[180px] h-[180px] bg-blue-600 rounded-lg p-4 flex flex-col justify-between border-4 border-white shadow-2xl scale-110 transition-all cursor-pointer">
+                <div class="xmb-item min-w-[180px] h-[180px] bg-blue-600 rounded-lg p-4 flex flex-col justify-between border-2 border-transparent hover:border-white/50 transition-all opacity-80 cursor-pointer">
                     <span class="text-4xl">🛍️</span>
                     <div>
-                        <h3 class="font-bold text-lg leading-tight">PlayStation Store</h3>
-                        <p class="text-[10px] text-blue-200">Iniciar</p>
+                        <h3 class="font-bold text-lg leading-tight">NEXUS Store</h3>
+                        <p class="text-[10px] text-blue-200">Tienda oficial</p>
                     </div>
                 </div>
 
@@ -83,14 +122,6 @@
                     <span class="text-4xl">🎮</span>
                     <div>
                         <h3 class="font-bold text-lg leading-tight">FLAP DASH</h3>
-                        <p class="text-[10px] text-slate-400">Juego instalado</p>
-                    </div>
-                </div>
-
-                <div class="xmb-item min-w-[180px] h-[180px] bg-slate-800 rounded-lg p-4 flex flex-col justify-between border-2 border-transparent hover:border-white/50 transition-all opacity-80 cursor-pointer">
-                    <span class="text-4xl">📦</span>
-                    <div>
-                        <h3 class="font-bold text-lg leading-tight">BLOCKFALL</h3>
                         <p class="text-[10px] text-slate-400">Juego instalado</p>
                     </div>
                 </div>
@@ -111,9 +142,8 @@
             <div class="flex gap-6">
                 <span><kbd class="bg-white/20 px-2 py-0.5 rounded text-white">Enter</kbd> Seleccionar</span>
                 <span><kbd class="bg-white/20 px-2 py-0.5 rounded text-white">← / →</kbd> Moverse</span>
-                <span><kbd class="bg-white/20 px-2 py-0.5 rounded text-white">Tab</kbd> Menú de opciones</span>
             </div>
-            <span>PS4 Web OS Simulator</span>
+            <span>NEXUS.OS Web Engine</span>
         </footer>
 
     </main>
