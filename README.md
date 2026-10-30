@@ -20,4 +20,4 @@ cd ps4-web-os
 
 ## 📜 Licencia
 
-Este proyecto es Open Source bajo la licencia [MIT](https://www.google.com/search?q=LICENSE).
+Este proyecto es Open Source bajo la licencia [MIT](/license).
