@@ -27,3 +27,13 @@ La barra de inicio comprueba los recursos locales del sistema. La transición de
 
 ## Desarrollo
 Tecnologías: HTML5, CSS3, JavaScript vanilla y Web Audio API.
+
+## PS4TCHA (prototipo)
+- Página independiente de demostración: `ps4tcha.html`.
+- Estilos: `assets/css/ps4tcha.css`.
+- Motor del desafío y evaluación básica de señales de automatización: `assets/js/ps4tcha.js`.
+- Se integra en el inicio, selección de perfil, creación de perfil y dashboard.
+- Si detecta señales fuertes (por ejemplo, `navigator.webdriver` o un agente de automatización), muestra un reto visual de selección de símbolos.
+- Una verificación superada se conserva en la pestaña durante 10 minutos.
+
+**Limitación de seguridad:** esta primera versión es un prototipo de interfaz y detección del lado del navegador. El reto y su comprobación se ejecutan en el cliente, por lo que un bot avanzado puede inspeccionarlos o saltárselos. No protege por sí solo formularios, cuentas ni datos. Para usarlo como protección real, la siguiente fase debe emitir desafíos y validar respuestas en un backend, con tokens firmados de un solo uso, caducidad y límites de intentos. PS4TCHA no bloquea F12 ni intenta luchar contra las herramientas de desarrollo.
