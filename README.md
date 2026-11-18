@@ -1,30 +1,29 @@
-# 🎮 PS4 Web OS Simulator (NEXUS.OS)
+# 🎮 PS4 Web OS Simulator — NEXUS.OS
 
-<p align="center">
-  <img src="nexus.os badge.png" alt="Powered by NEXUS.OS" width="300">
-</p>
+Un simulador web de consola inspirado en interfaces XMB, construido con HTML, CSS y JavaScript.
 
-Un simulador avanzado de la interfaz de usuario (XMB) de PlayStation 4 construido con HTML5, CSS3 y JavaScript vanilla. Diseñado para ofrecer una experiencia fluida desde cualquier navegador, con soporte para perfiles locales, publicación de juegos HTML en la store y controles físicos.
+## Funciones
+- Pantalla de inicio animada con logo SVG y comprobación de recursos del sistema.
+- Perfiles locales: crear, seleccionar y cambiar usuario.
+- Dashboard XMB con navegación por teclado, móvil y gamepad.
+- Transición de carga estilo **PS4 LOADING** al abrir aplicaciones: oscurece la pantalla, muestra barra de progreso y el recurso que se está preparando.
+- NEXUS Blank: pantalla about:blank personalizada, color de fondo y navegación a páginas web compatibles con iframe.
+- Efectos de audio sintetizados y controles de sonido/volumen en Ajustes.
+- NEXUS Store y juegos originales integrados en pantalla completa.
 
-## ✨ Características
-- 🌊 **Fondo Dinámico:** Ondas animadas estilo PS4.
-- 👤 **Configuración y Perfiles:** Pantalla de setup inicial y selección de usuarios guardados en `localStorage`.
-- 🛍️ **NEXUS Store & Publicación:** Apartado especial para publicar y ejecutar juegos creados en código HTML directamente desde la ruta virtual `/nexus-store/publish`.
-- 🎮 **Navegación XMB:** Menú horizontal fluido con iconos de apps y juegos.
-- 🕹️ **Soporte para Gamepad:** Navega la interfaz usando un control real mediante la *Gamepad API*.
-- 🔊 **Efectos de Audio:** Sonidos nativos del sistema generados por Web Audio API.
+## Inicio
+Abre el sitio desde index.html. En el primer inicio se muestra setup.html; después podrás elegir un perfil en login.html.
 
-## 🚀 Probar en Vivo
-Puedes probar la versión en producción desplegada automáticamente en Vercel:
-👉 **[ps4-web.vercel.app](https://ps4-web.vercel.app)**
+Los perfiles y preferencias se guardan en el almacenamiento local del navegador. No se sincronizan entre dispositivos.
 
-O clonar el repositorio localmente:
-```bash
-git clone https://github.com/anyelo888ra-ux/ps4-web-os.git
-cd ps4-web-os
+## Controles
+- Flechas izquierda/derecha: moverse por el menú.
+- Enter: abrir.
+- Escape: cerrar la aplicación (en páginas embebidas que cooperen con el mensaje de salida).
+- Gamepad: navegación básica cuando el navegador expone la Gamepad API.
 
-```
+## Nota sobre la carga
+La barra de inicio comprueba los recursos locales del sistema. La transición de aplicaciones usa un progreso visual estimado y el evento de carga del iframe; las páginas externas pueden bloquear la inserción mediante sus propias políticas de seguridad.
 
-## 📜 Licencia
-
-Este proyecto es Open Source bajo la licencia [MIT](/LICENSE).
+## Desarrollo
+Tecnologías: HTML5, CSS3, JavaScript vanilla y Web Audio API.
