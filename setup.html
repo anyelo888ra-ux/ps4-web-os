@@ -1,76 +1,8 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Configuración Inicial - NEXUS.OS</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="icon" type="svg+xml" href="favicon.svg">
-</head>
-<body class="bg-slate-950 text-white h-screen overflow-hidden flex flex-col justify-between p-12 select-none">
-    <div class="waves-bg fixed inset-0 z-0 pointer-events-none opacity-80"></div>
-
-    <div class="relative z-10 flex items-center gap-4">
-        <div class="text-3xl font-extrabold tracking-widest text-blue-100 flex items-center gap-2">
-            <span>⚡</span> NEXUS.OS
-        </div>
-    </div>
-
-    <div class="relative z-10 max-w-md mx-auto w-full flex flex-col gap-6">
-        <div class="text-center">
-            <h2 class="text-2xl font-bold text-white mb-1">Configuración Inicial</h2>
-            <p class="text-slate-300 text-xs">Crea tu usuario para comenzar a usar la consola web.</p>
-        </div>
-
-        <div class="space-y-4 bg-white/5 p-6 rounded-2xl border border-white/10 shadow-2xl backdrop-blur-md">
-            <div>
-                <label class="block text-xs font-bold text-slate-300 mb-2">Nombre de Usuario</label>
-                <input type="text" id="setup-username" placeholder="Ej: c00lkidd_player" class="w-full bg-slate-900/80 border border-white/20 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-400 transition">
-            </div>
-
-            <div>
-                <label class="block text-xs font-bold text-slate-300 mb-2">Selecciona un Avatar</label>
-                <div class="flex gap-4 justify-center">
-                    <button class="avatar-opt active w-14 h-14 rounded-lg bg-blue-600 border-2 border-white flex items-center justify-center text-2xl transition cursor-pointer" data-avatar="🤖">🤖</button>
-                    <button class="avatar-opt w-14 h-14 rounded-lg bg-indigo-600 border-2 border-transparent flex items-center justify-center text-2xl transition cursor-pointer" data-avatar="🎮">🎮</button>
-                    <button class="avatar-opt w-14 h-14 rounded-lg bg-purple-600 border-2 border-transparent flex items-center justify-center text-2xl transition cursor-pointer" data-avatar="👾">👾</button>
-                    <button class="avatar-opt w-14 h-14 rounded-lg bg-emerald-600 border-2 border-transparent flex items-center justify-center text-2xl transition cursor-pointer" data-avatar="🔥">🔥</button>
-                </div>
-            </div>
-
-            <button id="btn-create-user" class="w-full bg-blue-600 hover:bg-blue-500 font-bold text-sm py-3 rounded-lg transition shadow-lg shadow-blue-600/30 cursor-pointer mt-2">
-                Guardar y Entrar
-            </button>
-        </div>
-    </div>
-
-    <div class="relative z-10 text-center text-xs text-slate-400 border-t border-white/10 pt-4">
-        <span>Los datos de usuario se guardan localmente en tu navegador.</span>
-    </div>
-
-    <script>
-        let selectedAvatar = '🤖';
-        document.querySelectorAll('.avatar-opt').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.avatar-opt').forEach(b => b.classList.replace('border-white', 'border-transparent'));
-                btn.classList.replace('border-transparent', 'border-white');
-                selectedAvatar = btn.dataset.avatar;
-            });
-        });
-
-        document.getElementById('btn-create-user').addEventListener('click', () => {
-            const username = document.getElementById('setup-username').value.trim();
-            if (!username) return alert('Por favor ingresa un nombre de usuario.');
-
-            const users = JSON.parse(localStorage.getItem('nexus_os_users') || '[]');
-            const newUser = { id: Date.now(), username, avatar: selectedAvatar };
-            users.push(newUser);
-            localStorage.setItem('nexus_os_users', JSON.stringify(users));
-            localStorage.setItem('nexus_active_user', JSON.stringify(newUser));
-
-            window.location.href = 'menu.html';
-        });
-    </script>
-</body>
-</html>
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#07152e"><title>Crear perfil — NEXUS.OS</title><link rel="icon" type="image/svg+xml" href="favicon.svg"><link rel="stylesheet" href="assets/css/style.css">
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:#06132b;color:white;font-family:Arial,sans-serif;display:grid;place-items:center;padding:20px}.waves-bg{position:fixed!important;inset:0;z-index:0;pointer-events:none}.card{position:relative;z-index:1;width:min(470px,100%);padding:clamp(22px,5vw,36px);border:1px solid #ffffff25;border-radius:18px;background:#07172de8;box-shadow:0 25px 90px #0008;backdrop-filter:blur(14px)}.brand{text-align:center;font-size:24px;font-weight:900;letter-spacing:.18em}.muted{color:#a8bdd8}.field{width:100%;margin-top:8px;padding:13px 14px;background:#020b19;border:1px solid #ffffff30;border-radius:9px;color:white;outline:none}.field:focus{border-color:#65b5ff}.avatars{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:12px 0 22px}.avatar-opt{width:57px;height:57px;border:2px solid #ffffff25;border-radius:12px;background:#ffffff0d;font-size:27px;cursor:pointer}.avatar-opt.active{border-color:#fff;background:#287ad0}.primary{width:100%;padding:13px;background:#176bd1;color:white;border:0;border-radius:9px;font-weight:bold;cursor:pointer}.primary:hover{background:#2789f5}.secondary{background:transparent;border:0;color:#9ecbff;cursor:pointer;padding:12px}
+</style></head><body><div class="waves-bg"></div><main class="card"><div class="brand">◈ NEXUS.OS</div><h1 style="text-align:center;margin:25px 0 5px;font-size:25px">Crear jugador</h1><p class="muted" style="text-align:center;font-size:13px;margin:0 0 25px">Personaliza tu perfil de consola</p><label for="username" class="muted" style="font-size:12px;font-weight:bold">NOMBRE DE USUARIO</label><input id="username" class="field" maxlength="20" autocomplete="nickname" placeholder="Ej. c00lkidd_player"><p id="error" role="alert" style="color:#ff9b9b;font-size:12px;min-height:16px"></p><div class="muted" style="font-size:12px;font-weight:bold;text-align:center">ELIGE TU AVATAR</div><div class="avatars" id="avatars"><button type="button" class="avatar-opt active" data-avatar="🤖">🤖</button><button type="button" class="avatar-opt" data-avatar="🎮">🎮</button><button type="button" class="avatar-opt" data-avatar="👾">👾</button><button type="button" class="avatar-opt" data-avatar="🔥">🔥</button><button type="button" class="avatar-opt" data-avatar="🐱">🐱</button><button type="button" class="avatar-opt" data-avatar="🚀">🚀</button></div><button id="create" class="primary">Guardar y entrar</button><button id="back" class="secondary" style="width:100%">Volver a seleccionar usuario</button><p class="muted" style="font-size:11px;text-align:center;margin:18px 0 0">Los perfiles se guardan en este navegador.</p></main>
+<script src="assets/js/audio.js"></script><script>
+(()=>{let avatar='🤖';const input=document.querySelector('#username'),error=document.querySelector('#error');document.querySelectorAll('.avatar-opt').forEach(b=>b.onclick=()=>{document.querySelectorAll('.avatar-opt').forEach(x=>x.classList.remove('active'));b.classList.add('active');avatar=b.dataset.avatar;audio.playMove()});function create(){const username=input.value.trim().replace(/\s+/g,' ');if(username.length<2||username.length>20){error.textContent='Usa entre 2 y 20 caracteres.';return}if(/[<>]/.test(username)){error.textContent='Ese nombre contiene caracteres no permitidos.';return}let users=[];try{users=JSON.parse(localStorage.getItem('nexus_os_users')||'[]');if(!Array.isArray(users))users=[]}catch{}if(users.some(u=>String(u.username||'').toLowerCase()===username.toLowerCase())){error.textContent='Ya existe un perfil con ese nombre.';return}const user={id:Date.now(),username,avatar,createdAt:new Date().toISOString()};users.push(user);localStorage.setItem('nexus_os_users',JSON.stringify(users));localStorage.setItem('nexus_active_user',JSON.stringify(user));audio.playSelect();location.href='menu.html'}document.querySelector('#create').onclick=create;input.addEventListener('keydown',e=>{if(e.key==='Enter')create()});document.querySelector('#back').onclick=()=>location.href='login.html';input.focus()})();
+</script></body></html>
