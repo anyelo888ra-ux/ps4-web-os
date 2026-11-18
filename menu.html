@@ -1,167 +1,51 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXUS.OS - Menú Principal</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="icon" type="svg+xml" href="favicon.svg">
-</head>
-<body class="bg-slate-950 text-white h-screen overflow-hidden select-none font-sans">
-
-    <!-- Ambient Waves Background -->
-    <div class="waves-bg fixed inset-0 z-0 pointer-events-none opacity-80"></div>
-
-    <!-- Main XMB Dashboard -->
-    <main id="xmb-dashboard" class="relative z-10 h-full flex flex-col justify-between p-10">
-        
-        <!-- Top Navigation Bar -->
-        <header class="flex justify-between items-center text-slate-300 text-sm font-semibold">
-            <div class="flex items-center gap-6">
-                <span title="NEXUS Pass" class="text-xl cursor-pointer hover:scale-110 transition">⚡</span>
-                <span title="Novedades" class="text-xl cursor-pointer hover:scale-110 transition">ℹ️</span>
-                <span title="Trofeos" class="text-xl cursor-pointer hover:scale-110 transition">🏆 1</span>
-            </div>
-            <div class="flex items-center gap-4 text-xs">
-                <span id="active-user-display" class="font-bold text-white">Usuario</span>
-                <span id="clock" class="text-sm font-bold text-white">03:33 PM</span>
-            </div>
-        </header>
-
-        <!-- Main Items Carousel (XMB) -->
-        <section class="my-auto">
-            <div id="carousel" class="flex gap-6 transition-transform duration-300 ease-out items-center">
-                
-                <!-- NEXUS Pass -->
-                <div class="xmb-item active min-w-[180px] h-[180px] bg-amber-600 rounded-lg p-4 flex flex-col justify-between border-4 border-white shadow-2xl scale-110 transition-all cursor-pointer" onclick="openApp('pass')">
-                    <span class="text-4xl">⚡</span>
-                    <div>
-                        <h3 class="font-bold text-lg leading-tight">NEXUS Pass</h3>
-                        <p class="text-[10px] text-amber-200">Beneficios activos</p>
-                    </div>
-                </div>
-
-                <!-- Store (Redirige a store.html) -->
-                <div class="xmb-item min-w-[180px] h-[180px] bg-blue-600 rounded-lg p-4 flex flex-col justify-between border-2 border-transparent hover:border-white/50 transition-all opacity-80 cursor-pointer" onclick="window.location.href='store.html'">
-                    <span class="text-4xl">🛍️</span>
-                    <div>
-                        <h3 class="font-bold text-lg leading-tight">NEXUS Store</h3>
-                        <p class="text-[10px] text-blue-200">Tienda y Publicación</p>
-                    </div>
-                </div>
-
-                <!-- FLAP DASH -->
-                <div class="xmb-item min-w-[180px] h-[180px] bg-slate-800 rounded-lg p-4 flex flex-col justify-between border-2 border-transparent hover:border-white/50 transition-all opacity-80 cursor-pointer" onclick="openApp('game')">
-                    <span class="text-4xl">🎮</span>
-                    <div>
-                        <h3 class="font-bold text-lg leading-tight">FLAP DASH</h3>
-                        <p class="text-[10px] text-slate-400">Juego instalado</p>
-                    </div>
-                </div>
-
-                <!-- NEXUS.AI -->
-                <div class="xmb-item min-w-[180px] h-[180px] bg-indigo-900 rounded-lg p-4 flex flex-col justify-between border-2 border-transparent hover:border-white/50 transition-all opacity-80 cursor-pointer" onclick="openApp('ai')">
-                    <span class="text-4xl">🤖</span>
-                    <div>
-                        <h3 class="font-bold text-lg leading-tight">NEXUS.AI</h3>
-                        <p class="text-[10px] text-indigo-300">Asistente Virtual</p>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Bottom Controls Bar -->
-        <footer class="flex justify-between items-center text-xs text-slate-400 border-t border-white/10 pt-4">
-            <div class="flex gap-6">
-                <span><kbd class="bg-white/20 px-2 py-0.5 rounded text-white">Enter</kbd> Seleccionar</span>
-                <span><kbd class="bg-white/20 px-2 py-0.5 rounded text-white">← / →</kbd> Moverse</span>
-                <button onclick="localStorage.removeItem('nexus_active_user'); window.location.href='login.html';" class="text-blue-400 hover:text-white transition font-bold cursor-pointer">Cambiar de usuario</button>
-            </div>
-            <span>NEXUS.OS Web Engine</span>
-        </footer>
-
-    </main>
-
-    <!-- App Modal Overlay -->
-    <div id="app-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-8 opacity-0 pointer-events-none transition-all duration-300">
-        <div class="bg-slate-900 border border-white/20 w-full max-w-4xl h-[80vh] rounded-2xl overflow-hidden flex flex-col shadow-2xl">
-            <div class="bg-slate-800 px-6 py-4 flex justify-between items-center border-b border-white/10">
-                <h3 id="modal-title" class="font-bold text-lg">App</h3>
-                <button onclick="closeApp()" class="text-xs bg-red-600 hover:bg-red-500 px-3 py-1.5 rounded font-bold cursor-pointer transition">Cerrar [Esc]</button>
-            </div>
-            <div id="modal-body" class="p-6 flex-1 overflow-y-auto"></div>
-        </div>
-    </div>
-
-    <script src="assets/js/audio.js"></script>
-    <script>
-        // Cargar usuario activo
-        const activeUser = JSON.parse(localStorage.getItem('nexus_active_user'));
-        if (!activeUser) {
-            window.location.href = 'login.html';
-        } else {
-            document.getElementById('active-user-display').innerText = `${activeUser.avatar} ${activeUser.username}`;
-        }
-
-        // Reloj
-        setInterval(() => {
-            document.getElementById('clock').innerText = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        }, 1000);
-
-        // Inyectar juegos publicados por la comunidad desde localStorage al carrusel
-        const carousel = document.getElementById('carousel');
-        const publishedGames = JSON.parse(localStorage.getItem('nexus_published_games') || '[]');
-        publishedGames.forEach((game, idx) => {
-            const div = document.createElement('div');
-            div.className = 'xmb-item min-w-[180px] h-[180px] bg-purple-900 rounded-lg p-4 flex flex-col justify-between border-2 border-transparent hover:border-white/50 transition-all opacity-80 cursor-pointer';
-            div.innerHTML = `
-                <span class="text-4xl">🚀</span>
-                <div>
-                    <h3 class="font-bold text-lg leading-tight">${game.title}</h3>
-                    <p class="text-[10px] text-purple-300">Por ${game.author}</p>
-                </div>
-            `;
-            div.onclick = () => openCustomGame(game.htmlContent);
-            carousel.appendChild(div);
-        });
-
-        // Manejo de Apps
-        function openApp(type) {
-            if (typeof audio !== 'undefined') audio.playSelect();
-            const modal = document.getElementById('app-modal');
-            const title = document.getElementById('modal-title');
-            const body = document.getElementById('modal-body');
-            modal.classList.remove('opacity-0', 'pointer-events-none');
-
-            if (type === 'pass') {
-                title.innerText = '⚡ NEXUS Pass';
-                body.innerHTML = `<h4 class='text-xl font-bold text-amber-400'>Suscripción Activa</h4><p class='text-sm text-slate-300 mt-2'>Disfruta de ventajas exclusivas en NEXUS.OS.</p>`;
-            } else if (type === 'game') {
-                title.innerText = '🎮 FLAP DASH';
-                body.innerHTML = `<div class='text-center py-12'><h4 class='text-2xl font-bold mb-2'>FLAP DASH Arcade</h4><p class='text-slate-400 text-sm'>Listo para jugar en tu navegador.</p></div>`;
-            } else if (type === 'ai') {
-                title.innerText = '🤖 NEXUS.AI';
-                body.innerHTML = `<div class='flex flex-col h-full justify-between'><div class='bg-slate-950 p-4 rounded-xl flex-1 text-sm text-indigo-300 border border-white/10'>¡Hola ${activeUser.username}! ¿En qué te ayudo hoy?</div></div>`;
-            }
-        }
-
-        function openCustomGame(htmlContent) {
-            if (typeof audio !== 'undefined') audio.playSelect();
-            const modal = document.getElementById('app-modal');
-            document.getElementById('modal-title').innerText = '🚀 Juego de la Comunidad';
-            document.getElementById('modal-body').innerHTML = `<div class='w-full h-full'>${htmlContent}</div>`;
-            modal.classList.remove('opacity-0', 'pointer-events-none');
-        }
-
-        function closeApp() {
-            document.getElementById('app-modal').classList.add('opacity-0', 'pointer-events-none');
-        }
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeApp();
-        });
-    </script>
-</body>
-</html>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#07152e"><title>NEXUS.OS — PS4 Web OS</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<script src="https://cdn.tailwindcss.com"></script><link rel="stylesheet" href="assets/css/style.css">
+<style>
+:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#06132b;color:#fff;font-family:Arial,sans-serif;overflow:hidden}.waves-bg{position:fixed;inset:0;background:radial-gradient(ellipse at 55% 30%,#174d91 0%,#0a2348 38%,#020817 100%);z-index:-2}.waves-bg:after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,#4ca4ff13 50%,transparent 70%);animation:glide 12s linear infinite}@keyframes glide{to{transform:translateX(30%)}}.tile{width:clamp(118px,15vw,190px);height:clamp(118px,15vw,190px);flex:0 0 auto;border:2px solid #ffffff22;border-radius:5px;background:linear-gradient(145deg,var(--c1),var(--c2));display:flex;flex-direction:column;justify-content:space-between;padding:15px;opacity:.82;transition:.2s;cursor:pointer;text-align:left}.tile.active{opacity:1;transform:scale(1.12);border:3px solid white;box-shadow:0 12px 45px #0008}.tile .emoji{font-size:38px}.tile small{color:#dbeafe}.screen{position:fixed;inset:0;z-index:40;background:#030914;display:none}.screen.open{display:flex;flex-direction:column}.screen iframe{border:0;width:100%;height:100%;background:#050b18;flex:1}.screenbar{height:48px;flex:0 0 48px;background:#07162d;border-bottom:1px solid #ffffff20;display:flex;align-items:center;justify-content:space-between;padding:0 14px}.screenbar button{background:#c83245;padding:7px 14px;border-radius:5px;font-weight:bold}.xmb-wrap{overflow-x:auto;scrollbar-width:none;padding:35px 24px}.xmb-wrap::-webkit-scrollbar{display:none}#carousel{display:flex;align-items:center;gap:22px;width:max-content;min-height:220px}.topbar,.bottombar{padding:18px 4vw;display:flex;align-items:center;justify-content:space-between}.bottombar{border-top:1px solid #ffffff25;color:#b9c9df;font-size:12px}.hint{background:#ffffff24;border-radius:4px;padding:3px 8px;color:white}#subnav{display:flex;gap:18px;color:#c7d8ef;font-size:13px;padding:0 4vw}#subnav span{cursor:pointer}.mobile-controls{display:none}@media(max-width:650px){.topbar{padding:12px 16px}.xmb-wrap{padding:24px 16px}#carousel{gap:16px}.bottombar{padding:12px 16px}.desktop-hint{display:none}.mobile-controls{display:flex;gap:8px}.tile{width:128px;height:128px}.tile .emoji{font-size:30px}} 
+</style></head>
+<body><div class="waves-bg"></div>
+<main id="dashboard" class="h-screen flex flex-col justify-between">
+<header class="topbar"><div class="flex gap-5 items-center"><b class="text-xl tracking-widest">◈ NEXUS.OS</b><span>⚡ <small>NEXUS Pass</small></span><span>🏆 <small>Trofeos</small></span></div><div class="flex gap-4 items-center"><span id="userLabel">Jugador</span><span id="clock" class="font-bold"></span></div></header>
+<nav id="subnav"><span data-nav="games">Juegos</span><span data-nav="media">Multimedia</span><span data-nav="store">PlayStation Store</span><span data-nav="settings">Ajustes</span></nav>
+<section class="my-auto"><div class="px-4 md:px-10 mb-3 text-sm text-blue-100" id="sectionTitle">Juegos y aplicaciones</div><div class="xmb-wrap"><div id="carousel">
+<button class="tile active" data-id="pass" style="--c1:#d18a16;--c2:#70400c"><span class="emoji">⚡</span><span><b>NEXUS Pass</b><br><small>Centro de beneficios</small></span></button>
+<button class="tile" data-id="store" style="--c1:#167bd2;--c2:#07386d"><span class="emoji">🛍️</span><span><b>NEXUS Store</b><br><small>Explorar y publicar</small></span></button>
+<button class="tile" data-id="turbo-arena" style="--c1:#126d7d;--c2:#102a58"><span class="emoji">🚗⚽</span><span><b>Turbo Arena</b><br><small>Fútbol con vehículos</small></span></button>
+<button class="tile" data-id="rift-royale" style="--c1:#7a36b4;--c2:#25205e"><span class="emoji">🪂</span><span><b>Rift Royale</b><br><small>Supervivencia arcade</small></span></button>
+<button class="tile" data-id="blockworld" style="--c1:#269b68;--c2:#16452f"><span class="emoji">🧱</span><span><b>BlockWorld</b><br><small>Crear y explorar</small></span></button>
+<button class="tile" data-id="flap" style="--c1:#42536b;--c2:#18243a"><span class="emoji">🐤</span><span><b>FLAP DASH</b><br><small>Arcade</small></span></button>
+<button class="tile" data-id="nexus-ai" style="--c1:#4936b8;--c2:#17134e"><span class="emoji">🤖</span><span><b>NEXUS.AI</b><br><small>Asistente web</small></span></button>
+<button class="tile" data-id="browser" style="--c1:#168baf;--c2:#10456a"><span class="emoji">🌐</span><span><b>Navegador</b><br><small>Web</small></span></button>
+<button class="tile" data-id="settings" style="--c1:#526176;--c2:#202b3a"><span class="emoji">⚙️</span><span><b>Ajustes</b><br><small>Sistema</small></span></button>
+</div></div></section>
+<footer class="bottombar"><div class="flex gap-5 desktop-hint"><span><kbd class="hint">← →</kbd> Mover</span><span><kbd class="hint">Enter</kbd> Abrir</span><span><kbd class="hint">Esc</kbd> Salir de juego</span></div><div class="mobile-controls"><button id="leftBtn" class="hint">◀</button><button id="openBtn" class="hint">Abrir</button><button id="rightBtn" class="hint">▶</button></div><div class="flex gap-4"><button id="switchUser" class="text-blue-200">Cambiar usuario</button><span>NEXUS Web Engine</span></div></footer>
+</main>
+<section id="appScreen" class="screen" aria-hidden="true"><div class="screenbar"><strong id="appTitle">Aplicación</strong><div class="flex gap-3 items-center"><span class="text-xs text-slate-300 hidden sm:inline">ESC para volver al menú</span><button id="exitApp">✕ Salir</button></div></div><iframe id="appFrame" title="Aplicación NEXUS" allow="fullscreen; gamepad; autoplay; clipboard-read; clipboard-write" referrerpolicy="strict-origin-when-cross-origin"></iframe></section>
+<script src="assets/js/audio.js"></script><script>
+(()=>{
+const $=s=>document.querySelector(s), tiles=[...document.querySelectorAll('.tile')], frame=$('#appFrame'), screen=$('#appScreen');let index=0,opened=false;
+let user;try{user=JSON.parse(localStorage.getItem('nexus_active_user')||'null')}catch{}if(!user){location.href='login.html';return}
+$('#userLabel').textContent=(user.avatar||'🎮')+' '+(user.username||'Jugador');
+function clock(){ $('#clock').textContent=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}clock();setInterval(clock,1000);
+function select(i){index=Math.max(0,Math.min(tiles.length-1,i));tiles.forEach((t,n)=>t.classList.toggle('active',n===index));tiles[index].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}
+function launch(id,title,url){opened=true;$('#appTitle').textContent=title;frame.src=url;screen.classList.add('open');screen.setAttribute('aria-hidden','false');$('#dashboard').setAttribute('aria-hidden','true');}
+function exit(){if(!opened)return;opened=false;frame.src='about:blank';screen.classList.remove('open');screen.setAttribute('aria-hidden','true');$('#dashboard').setAttribute('aria-hidden','false');}
+function openSelected(){const id=tiles[index].dataset.id;const map={
+'pass':['NEXUS Pass','apps/pass.html'],'store':['NEXUS Store','store.html?embedded=1'],
+'turbo-arena':['Turbo Arena','games/turbo-arena.html'],'rift-royale':['Rift Royale','games/rift-royale.html'],
+'blockworld':['BlockWorld','games/blockworld.html'],'flap':['FLAP DASH','games/flap-dash.html'],
+'nexus-ai':['NEXUS.AI','https://nexus.ai-nex.duckdns.org/'],'browser':['Navegador','apps/browser.html'],'settings':['Ajustes','apps/settings.html']};
+const item=map[id];if(item)launch(id,item[0],item[1]);}
+tiles.forEach((t,i)=>{t.addEventListener('click',()=>{select(i);openSelected()});});
+document.addEventListener('keydown',e=>{if(opened){if(e.key==='Escape'){e.preventDefault();exit()}return}if(e.key==='ArrowRight'){e.preventDefault();select(index+1)}if(e.key==='ArrowLeft'){e.preventDefault();select(index-1)}if(e.key==='Enter'){e.preventDefault();openSelected()}});
+$('#exitApp').addEventListener('click',exit);$('#leftBtn').onclick=()=>select(index-1);$('#rightBtn').onclick=()=>select(index+1);$('#openBtn').onclick=openSelected;
+$('#switchUser').onclick=()=>{localStorage.removeItem('nexus_active_user');location.href='login.html'};
+document.querySelectorAll('[data-nav]').forEach(n=>n.addEventListener('click',()=>{const target=n.dataset.nav;if(target==='store'){select(1);openSelected()}else if(target==='settings'){select(8);openSelected()}else{select(target==='media'?7:2)}}));
+let gpIndex=-1;function pollGamepad(){const pads=navigator.getGamepads?.()||[];const gp=[...pads].find(Boolean);if(gp){if(gp.buttons[15]?.pressed&&gpIndex!==15){select(index+1);gpIndex=15}else if(gp.buttons[14]?.pressed&&gpIndex!==14){select(index-1);gpIndex=14}else if(gp.buttons[0]?.pressed&&gpIndex!==0){if(opened){}else openSelected();gpIndex=0}else if(!gp.buttons.some(b=>b.pressed))gpIndex=-1;}requestAnimationFrame(pollGamepad)}pollGamepad();select(0);
+})();
+</script></body></html>
