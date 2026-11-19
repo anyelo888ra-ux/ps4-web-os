@@ -1,39 +1,42 @@
-# 🎮 PS4 Web OS Simulator — NEXUS.OS
+# 🎮 NEXUS.OS — PS4 Web OS Simulator
 
-Un simulador web de consola inspirado en interfaces XMB, construido con HTML, CSS y JavaScript.
+NEXUS.OS es una recreación web de una interfaz de consola, desarrollada con HTML, CSS y JavaScript vanilla. No es un emulador de PlayStation ni ejecuta juegos comerciales de PS4.
 
 ## Funciones
-- Pantalla de inicio animada con logo SVG y comprobación de recursos del sistema.
-- Perfiles locales: crear, seleccionar y cambiar usuario.
-- Dashboard XMB con navegación por teclado, móvil y gamepad.
-- Transición de carga estilo **PS4 LOADING** al abrir aplicaciones: oscurece la pantalla, muestra barra de progreso y el recurso que se está preparando.
-- NEXUS Blank: pantalla about:blank personalizada, color de fondo y navegación a páginas web compatibles con iframe.
-- Efectos de audio sintetizados y controles de sonido/volumen en Ajustes.
-- NEXUS Store y juegos originales integrados en pantalla completa.
+- Arranque animado, perfiles locales y dashboard estilo XMB.
+- Navegación por teclado, táctil y Gamepad API.
+- Aplicaciones y juegos HTML propios.
+- NEXUS Store con publicación local e importación/exportación de juegos como archivos `.nexusgame`.
+- Centro de trofeos y emblemas por perfil.
+- Respaldo/restauración JSON de perfiles, juegos, preferencias, trofeos e identificadores.
+- NEXUS Share con ID permanente por perfil y rutas `/console/shared-screen/:id` y `/console/controlling-sim/:id`.
+- PWA con caché de páginas y recursos principales para uso offline.
 
 ## Inicio
-Abre el sitio desde index.html. En el primer inicio se muestra setup.html; después podrás elegir un perfil en login.html.
+Abre `index.html`. En el primer inicio se muestra `setup.html`; después podrás elegir un perfil en `login.html`.
 
-Los perfiles y preferencias se guardan en el almacenamiento local del navegador. No se sincronizan entre dispositivos.
+## Compartir pantalla y control remoto
+- En el mismo navegador/dispositivo se usa `BroadcastChannel`.
+- Entre dispositivos se usa WebRTC con intercambio manual de oferta y respuesta JSON. No se necesita una base de datos ni servidor de señalización, pero el enlace por sí solo no realiza el emparejamiento.
+- El emisor debe conceder permiso de captura de pantalla. Se requiere HTTPS y un navegador compatible.
+- La conexión directa puede depender de NAT y de la red; no se garantiza que todas las redes permitan conexión P2P.
+- El control se limita a enviar teclas a la interfaz NEXUS.OS; no controla el sistema operativo del dispositivo.
+- Comparte los códigos de emparejamiento solo con personas de confianza.
+
+## Respaldo y almacenamiento
+Los datos se guardan localmente en el navegador. Usa Ajustes → Respaldo JSON para descargar una copia fuera del navegador. La importación crea primero una copia del estado actual. No borres los datos del navegador hasta verificar el archivo de respaldo.
+
+## PWA / modo offline
+El service worker se registra al entrar al dashboard y almacena páginas y recursos principales. La primera visita debe hacerse online para instalar la caché. Algunas páginas y estilos externos pueden necesitar conexión.
 
 ## Controles
-- Flechas izquierda/derecha: moverse por el menú.
+- Flechas: moverse por el menú.
 - Enter: abrir.
-- Escape: cerrar la aplicación (en páginas embebidas que cooperen con el mensaje de salida).
+- Escape: salir de la aplicación.
 - Gamepad: navegación básica cuando el navegador expone la Gamepad API.
 
-## Nota sobre la carga
-La barra de inicio comprueba los recursos locales del sistema. La transición de aplicaciones usa un progreso visual estimado y el evento de carga del iframe; las páginas externas pueden bloquear la inserción mediante sus propias políticas de seguridad.
-
 ## Desarrollo
-Tecnologías: HTML5, CSS3, JavaScript vanilla y Web Audio API.
+HTML5, CSS3, JavaScript vanilla, Web Audio API, localStorage, BroadcastChannel, WebRTC y Service Worker.
 
-## PS4TCHA (prototipo)
-- Página independiente de demostración: `ps4tcha.html`.
-- Estilos: `assets/css/ps4tcha.css`.
-- Motor del desafío y evaluación básica de señales de automatización: `assets/js/ps4tcha.js`.
-- Se integra en el inicio, selección de perfil, creación de perfil y dashboard.
-- Si detecta señales fuertes (por ejemplo, `navigator.webdriver` o un agente de automatización), muestra un reto visual de selección de símbolos.
-- Una verificación superada se conserva en la pestaña durante 10 minutos.
-
-**Limitación de seguridad:** esta primera versión es un prototipo de interfaz y detección del lado del navegador. El reto y su comprobación se ejecutan en el cliente, por lo que un bot avanzado puede inspeccionarlos o saltárselos. No protege por sí solo formularios, cuentas ni datos. Para usarlo como protección real, la siguiente fase debe emitir desafíos y validar respuestas en un backend, con tokens firmados de un solo uso, caducidad y límites de intentos. PS4TCHA no bloquea F12 ni intenta luchar contra las herramientas de desarrollo.
+## PS4TCHA
+Prototipo de desafío visual ejecutado en el cliente. No es una barrera de seguridad real ni sustituye validación en servidor.
