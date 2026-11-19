@@ -1,0 +1,13 @@
+{
+  "name": "NEXUS.OS — PS4 Web OS",
+  "short_name": "NEXUS.OS",
+  "description": "Simulador web de consola NEXUS.OS",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#020713",
+  "theme_color": "#07152e",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
