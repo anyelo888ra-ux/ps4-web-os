@@ -43,7 +43,7 @@ El service worker se registra al entrar al dashboard y almacena páginas y recur
 HTML5, CSS3, JavaScript vanilla, Web Audio API, localStorage, BroadcastChannel, WebRTC y Service Worker.
 
 ## NEXUS GameScript Studio 1.0
-El lenguaje NEXUS PlayScript permite crear mini-juegos con comandos limitados (`GAME`, `BG`, `RECT`, `CIRCLE`, `TEXT`, `PLAYER`, `GOAL`, `SPEED`). No acepta JavaScript arbitrario, eval ni acceso a red o archivos. El código se valida con límites de tamaño, líneas, objetos, colores y coordenadas; la vista previa corre en un iframe `sandbox` sin `allow-same-origin` y con CSP restrictiva. Es un prototipo educativo, no un entorno para ejecutar HTML/JS de terceros.
+Los proyectos creados se pueden guardar directamente en la biblioteca local de NEXUS Store y exportar como `.nexusgame`. El lenguaje NEXUS PlayScript permite crear mini-juegos con comandos limitados (`GAME`, `BG`, `RECT`, `CIRCLE`, `TEXT`, `PLAYER`, `GOAL`, `SPEED`). No acepta JavaScript arbitrario, eval ni acceso a red o archivos. El código se valida con límites de tamaño, líneas, objetos, colores y coordenadas; la vista previa corre en un iframe `sandbox` sin `allow-same-origin` y con CSP restrictiva. Es un prototipo educativo, no un entorno para ejecutar HTML/JS de terceros.
 
 ## PS4TCHA 1.0
 Prototipo de desafío visual ejecutado en el cliente. No es una barrera de seguridad real ni sustituye validación en servidor. PS4TCHA es independiente del motor PlayScript.
