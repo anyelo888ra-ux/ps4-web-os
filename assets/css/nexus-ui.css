@@ -1,3 +1,4 @@
+html,body{margin:0}button,input,textarea{font:inherit}button{cursor:pointer}
 /* NEXUS.OS local utility layer — replaces the runtime Tailwind CDN */
 *{box-sizing:border-box}.min-h-screen{min-height:100vh}.h-screen{height:100vh}.fixed{position:fixed}.relative{position:relative}.inset-0{inset:0}.z-0{z-index:0}.z-10{z-index:10}
 .flex{display:flex}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.grid{display:grid}.block{display:block}.hidden{display:none!important}.items-center{align-items:center}.justify-between{justify-content:space-between}.mx-auto{margin-left:auto;margin-right:auto}.pointer-events-none{pointer-events:none}.opacity-80{opacity:.8}
