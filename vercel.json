@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/console/shared-screen/:id", "destination": "/console/shared-screen/index.html" },
+    { "source": "/console/controlling-sim/:id", "destination": "/console/controlling-sim/index.html" }
+  ]
+}
